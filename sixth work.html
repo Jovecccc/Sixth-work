@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>11</title>
+</head>
+<body>
+<button onclick="up()" >上一页</button>
+<button onclick="down()" >下一页</button>
+<div>
+	<span style="position: relative;" id="name" ></span>
+	<span style="position: relative;top: -410px;left: 150px;" id="gender"></span>
+	<span style="position: relative;top: -820px;left: 300px;" id="major"></span>
+	<span style="position: relative;top: -1230px;left: 450px;" id="student_num"></span>
+	<span style="position: relative;top: -1570px;left: 600px;" id="class_num"></span>
+</div>
+<script type="text/javascript">
+	var a = 'https://api.tumiv.com/v2/cqupt/student?page=';
+	var b = '&year=2015';
+	var i=0;
+	var xhr = new XMLHttpRequest;
+	xhr.open("get",a+i+b,true);
+	xhr.send();
+	function down(){
+		i=i+1;
+		xhr.open('get',a+i+b,true);
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState==4&&xhr.status==200)
+			{
+				var shuju1 = xhr.responseText;
+				var data = JSON.parse(shuju1);
+				// JSON.parse()
+				// // JSON.stringify()
+				for(f=0;f<=18;f++){
+					var name =name+ data.result[f].name+"<br/>";
+					var gender =gender+ data.result[f].gender+"<br/>" ;
+					var major =major+ data.result[f].major+"<br/>";
+					var student_num =student_num+ data.result[f].student_num +"<br/>";
+					var class_num =class_num+ data.result[f].class_num +"<br/>";
+				}
+				document.getElementById('name').innerHTML= name;
+				document.getElementById('gender').innerHTML=gender;
+				document.getElementById('major').innerHTML=major;
+				document.getElementById('student_num').innerHTML=student_num;
+				document.getElementById('class_num').innerHTML=class_num;
+
+			}
+		}
+	}
+	function up(){
+		if (i>=1){
+			i=i-1;
+			xhr.open('get',a+i+b,true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if(xhr.readyState==4&&xhr.status==200)
+				{
+					var shuju1 = xhr.responseText;
+					var data = JSON.parse(shuju1);
+					for(f=0;f<=18;f++){
+					var name =name+ data.result[f].name+"<br/>";
+					var gender =gender+ data.result[f].gender+"<br/>" ;
+					var major =major+ data.result[f].major+"<br/>";
+					var student_num =student_num+ data.result[f].student_num +"<br/>";
+					var class_num =class_num+ data.result[f].class_num +"<br/>";
+				}
+				document.getElementById('name').innerHTML= name;
+				document.getElementById('gender').innerHTML=gender;
+				document.getElementById('major').innerHTML=major;
+				document.getElementById('student_num').innerHTML=student_num;
+				document.getElementById('class_num').innerHTML=class_num;
+				}
+			}
+		}
+		else{
+			i=1;
+			alert("不能再上翻了")
+		}
+	}
+	// function down(){
+	// 	i+=1;
+	// 	var wangzhi = "https://api.tumiv.com/v2/cqupt/student?page="+"i"+"&year=2015"
+	// 	xhr.open("get",wangzhi,true);
+	// 	xhr.send();
+	// 	var shuju = xhr.responseText;
+	// 	document.getElementById("play").innerHTML=shuju;
+	// }
+</script>
+</body>
+</html>
